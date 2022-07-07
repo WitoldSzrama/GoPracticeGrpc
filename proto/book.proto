@@ -1,0 +1,50 @@
+syntax = "proto3";
+package proto;
+
+option go_package = "practice/three/proto";
+
+message Author {
+    int64 id = 1;
+    string first_name = 2;
+    string last_name = 3;
+}
+
+message Book {
+    int64 id = 1;
+    string name = 2;
+    Author author = 3;
+}
+
+message CreateBookRequest {
+    Author author = 1;
+    string name = 2;
+}
+
+message UpdateBookRequest {
+    int64 id = 1;
+    Author author = 2;
+    string name = 3;
+}
+
+message DeleteBookRequest {
+    int64 id = 1;
+}
+
+message GetBookRequest {
+    int64 id = 1;
+}
+
+message GetAuthorBooksRequest {
+    int64 id = 1;
+}
+
+message BookResponse { optional Book book = 1;}
+message BooksResponse { repeated Book books = 1;}
+
+service BookService {
+    rpc CreateBook(CreateBookRequest) returns (BookResponse) {}
+    rpc GetBook(GetBookRequest) returns (BookResponse) {}
+    rpc UpdateBook(UpdateBookRequest) returns (BookResponse) {}
+    rpc DeleteBook(DeleteBookRequest) returns (BookResponse) {}
+    rpc GetAuthorBooks(GetAuthorBooksRequest) returns (BooksResponse) {}
+}
